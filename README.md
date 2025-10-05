@@ -1,5 +1,8 @@
 # Run WebApp
 $ cd Zephyro
+
+$ pip install -r requirements.txt
+
 $ python app.py
 
 # Zephyro
