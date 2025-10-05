@@ -1,0 +1,41 @@
+{
+  "feature_columns": [
+    "Latitude",
+    "Longitude",
+    "lag_1",
+    "lag_2",
+    "lag_3",
+    "lag_4",
+    "lag_5",
+    "lag_6",
+    "lag_7",
+    "lag_8",
+    "lag_9",
+    "lag_10",
+    "lag_11",
+    "lag_12",
+    "lag_13",
+    "lag_14",
+    "roll_mean_3",
+    "roll_max_3",
+    "roll_mean_7",
+    "roll_max_7",
+    "roll_mean_14",
+    "roll_max_14",
+    "dayofweek",
+    "dow_0",
+    "dow_1",
+    "dow_2",
+    "dow_3",
+    "dow_4",
+    "dow_5",
+    "dow_6",
+    "doy_sin",
+    "doy_cos",
+    "lat_norm",
+    "lon_norm"
+  ],
+  "target_columns": [
+    "AQI"
+  ]
+}

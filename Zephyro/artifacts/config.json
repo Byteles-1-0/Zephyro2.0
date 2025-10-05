@@ -1,0 +1,14 @@
+{
+  "bbox": "-74.259090,40.477399,-73.700272,40.917577",
+  "history_window": 10,
+  "forecast_horizon": 7,
+  "val_days": 28,
+  "epochs": 30,
+  "lr": 0.001,
+  "use_baseline": true,
+  "metrics": {
+    "transformer_mae": 13.575446245621661,
+    "persistence_mae": 7.005102040816326,
+    "seasonal_mae": 0.0
+  }
+}

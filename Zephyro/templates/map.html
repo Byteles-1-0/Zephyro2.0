@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>North America AQI Heatmap</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<header>
+  <img src="{{ url_for('static', filename='ZEPHYRO.png') }}" alt="Logo" id="logo">
+  <span class="project-name">ZEPHYRO</span>
+  <div id="nasa-section" title="NASA Space App Challenge">
+    <span>NASA Space App Challenge</span>
+    <img src="{{ url_for('static', filename='nasa_logo.png') }}" alt="NASA Logo" id="nasa-logo" />
+
+  </div>
+  <button id="dark-mode-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+</header>
+
+<div id="map"></div>
+
+<div id="widgets">
+
+  <div class="widget" id="aqi-slider-widget" title="Filter AQI range">
+    <button class="widget-hide-btn" aria-label="Hide AQI Slider Widget" title="Hide">➔</button>
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <line x1="4" y1="12" x2="20" y2="12" stroke-width="2" stroke-linecap="round"/>
+      <circle id="slider-thumb" cx="12" cy="12" r="4" fill="#00e400" stroke="none" />
+    </svg>
+    <input type="range" id="aqi-slider" min="0" max="500" step="1" value="0" />
+  </div>
+
+  <div class="widget" id="layer-toggle-widget" title="Toggle Map Layer" aria-label="Toggle Map Layer" style="gap: 8px;">
+    <button class="widget-hide-btn" aria-label="Hide Layer Toggle Widget" title="Hide">➔</button>
+    <button id="streets-button" class="map-layer-button active" title="Normal Streets Map" aria-label="Normal Streets Map">
+      🗺️
+    </button>  
+    <button id="satellite-button" class="map-layer-button" title="Satellite Map" aria-label="Satellite Map">
+      🛰️
+    </button>
+    <button id="schools-hospitals-toggle" class="map-layer-button" title="Toggle Schools & Hospitals" aria-label="Toggle Schools and Hospitals">
+      🏫🏥
+    </button>
+    <button id="wildfires-toggle" class="map-layer-button" title="Toggle Wildfires" aria-label="Toggle Wildfires">
+      🔥
+    </button>  
+  
+
+    
+    
+  </div>
+
+  <div class="widget" id="aqi-legend-widget" title="AQI Legend">
+    <button class="widget-hide-btn" aria-label="Hide AQI Legend Widget" title="Hide">➔</button>
+    <button id="legend-toggle" aria-label="Toggle Legend Content">ℹ️</button>
+    <div id="legend-content" hidden>
+      <div><span class="color-block" style="background:#00e400"></span> Good (0-50)</div>
+      <div><span class="color-block" style="background:#ffff00"></span> Moderate (51-100)</div>
+      <div><span class="color-block" style="background:#ff7e00"></span> Unhealthy for Sensitive Groups (101-150)</div>
+      <div><span class="color-block" style="background:#ff0000"></span> Unhealthy (151-200)</div>
+      <div><span class="color-block" style="background:#99004c"></span> Very Unhealthy (201-300)</div>
+      <div><span class="color-block" style="background:#7e0023"></span> Hazardous (301+)</div>
+    </div>
+  </div>
+
+  <div class="widget" id="top-zones-widget" title="Top 3 Most Dangerous Zones">
+    <button class="widget-hide-btn" aria-label="Hide Top Zones Widget" title="Hide">➔</button>
+    <h4>Top 3 Dangerous Zones</h4>
+    <ol id="top-zones-list">
+      <li>Loading...</li>
+    </ol>
+  </div>
+</div>
+
+<div id="hidden-widgets"></div>
+
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+
+</body>
+</html>

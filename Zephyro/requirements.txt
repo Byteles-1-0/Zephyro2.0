@@ -1,0 +1,10 @@
+Flask
+requests
+python-dotenv
+Flask-Compress
+urllib3
+flask_cors
+torch
+numpy
+pandas
+scikit-learn

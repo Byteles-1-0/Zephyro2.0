@@ -1,0 +1,54 @@
+# =====================
+# Python
+# =====================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# =====================
+# Ambiente virtuale
+# =====================
+.venv/
+venv/
+ENV/
+env/
+*.env
+*.venv
+
+# =====================
+# IDE/editor
+# =====================
+.idea/
+.vscode/
+*.swp
+*.swo
+*.iml
+
+# =====================
+# Jupyter / notebook
+# =====================
+.ipynb_checkpoints/
+
+# =====================
+# Sistemi OS
+# =====================
+.DS_Store
+Thumbs.db
+
+# =====================
+# Flask specific
+# =====================
+instance/
+*.log
+
+# =====================
+# File di dati grandi (NetCDF o altri esempi)
+# =====================
+data/*.nc
+*.nc
