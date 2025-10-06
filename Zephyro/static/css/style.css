@@ -1,272 +1,338 @@
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-  
-  /* Light/Dark base tokens */
-  :root {
-    --bg-color: rgba(255, 255, 255, 0.85);
-    --text-color: #222;
-    --shadow-color: rgba(0, 0, 0, 0.12);
-    --header-bg: rgba(255,255,255,0.67);
-    --header-text: #222;
-  }
-  
-  body.dark-mode {
-    --bg-color: rgba(30, 30, 30, 0.85);
-    --text-color: #ddd;
-    --shadow-color: rgba(0, 0, 0, 0.7);
-    --header-bg: rgba(10, 10, 10, 0.8);
-    --header-text: #ddd;
-    background-color: #111;
-    color: var(--text-color);
-  }
-  
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 24px;
-    background: var(--header-bg);
-    color: var(--header-text);
-    box-shadow: 0 2px 10px var(--shadow-color);
-    backdrop-filter: blur(8px);
-    position: relative;
-    z-index: 1000;
-  }
-  
-  #logo { height: 48px; width: auto; margin-right: 16px; }
-  
-  .project-name {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #222;
-    letter-spacing: 0.02em;
-    font-family: 'Segoe UI', 'Arial', sans-serif;
-    flex-grow: 1;
-  }
-  
-  body.dark-mode .project-name { color: #fff; }
-  
-  #nasa-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--header-text);
-  }
-  
-  #nasa-logo { height: 32px; width: auto; }
-  
-  /* Dark mode toggle: circular */
-  #dark-mode-toggle {
-    background: var(--bg-color);
-    border: none;
-    color: var(--text-color);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px var(--shadow-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-left: 16px;
-  }
-  
-  #dark-mode-toggle:hover { filter: brightness(0.95); }
-  
-  /* Map fills space below header */
-  #map {
-    width: 100%;
-    height: calc(100vh - 70px);
-    position: relative;
-    z-index: 0;
-  }
-  
-  /* Widgets stack */
-  #widets, #widgets { /* typo guard */
-    position: absolute;
-    top: 70px;
-    right: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    z-index: 1100;
-    max-width: 280px;
-    padding-bottom: 20px;
-  }
-  
-  .widget {
-    background: var(--bg-color);
-    border-radius: 14px;
-    box-shadow: 0 2px 12px var(--shadow-color);
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--text-color);
-    user-select: none;
-    position: relative;
-    margin-bottom: 0;
-    top : 50px;
-  }
-  
-  .widget-hide-btn {
-    background: none;
-    border: none;
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 18px;
-    cursor: pointer;
-    color: #444;
-    padding: 2px 6px;
-    border-radius: 8px;
-    transition: color 0.2s ease, background 0.2s ease;
-  }
-  
-  .widget-hide-btn:hover { color: #000; background: rgba(0, 0, 0, 0.06); }
-  
-  .widget.hidden { display: none; }
-  
-  #hidden-widgets {
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-    height: 48px; /* fixed height for icons row */
-    width: auto;
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    z-index: 1101;
-    pointer-events: auto;
-  }
-  
-  .hidden-widget-icon {
-    background: var(--bg-color);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 12px var(--shadow-color);
-    user-select: none;
-    font-size: 20px;
-    position: relative;
-    top: 0 !important;  /* Remove absolute positioning */
-    right: 0 !important;
-    transition: transform 0.3s ease;
-  }
-  
-  
-  /* Slider widget layout */
-  #aqi-slider-widget { flex-direction: column; padding: 8px 14px; width: 100%; gap: 8px; cursor: pointer; }
-  
-  #aqi-slider {
-    width: 100%;
-    appearance: none;
-    height: 12px;
-    border-radius: 8px;
-    background: linear-gradient(
-      to right,
-      #00e400 0%,
-      #00e400 10%,
-      #ffff00 10%,
-      #ffff00 30%,
-      #ff7e00 30%,
-      #ff7e00 50%,
-      #ff0000 50%,
-      #ff0000 70%,
-      #99004c 70%,
-      #99004c 90%,
-      #7e0023 90%,
-      #7e0023 100%
-    );
-    outline: none; border: none; cursor: pointer;
-  }
-  
-  #aqi-slider::-webkit-slider-thumb {
-    appearance: none; width: 22px; height: 22px; border-radius: 50%;
-    background: #222; cursor: pointer; border: 2px solid white; margin-top: -5px;
-    transition: background-color 0.2s ease;
-  }
-  #aqi-slider::-webkit-slider-thumb:hover { background: #555; }
-  
-  /* Map Layer Toggle button (no nested buttons) */
-  #layer-toggle-button {
-    background: var(--bg-color);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    width: 48px;
-    height: 48px;
-    display: flex; align-items: center; justify-content: center;
-    color: #444;
-    box-shadow: 0 1px 8px var(--shadow-color);
-    border-radius: 14px;
-    transition: color 0.2s ease, filter 0.2s ease;
-  }
-  #layer-toggle-button:hover { color: #000; filter: brightness(0.98); }
-  
-  .icon { width: 24px; height: 24px; stroke-width: 2; stroke: currentColor; fill: none; }
-  
-  /* AQI Legend */
-  #aqi-legend-widget { flex-direction: column; width: 100%; font-size: 13px; position: relative; }
-  #legend-toggle { background: none; border: none; color: #444; font-size: 20px; cursor: pointer; margin-bottom: 6px; align-self: flex-start; padding: 0; }
-  #legend-content { background: var(--bg-color); border-radius: 12px; box-shadow: 0 1px 8px var(--shadow-color); padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
-  .color-block { width: 18px; height: 14px; display: inline-block; border-radius: 4px; margin-right: 8px; vertical-align: middle; }
-  
-  /* Top 3 Zones */
-  #top-zones-widget { flex-direction: column; max-height: 180px; overflow-y: auto; width: 100%; font-size: 14px; position: relative; }
-  #top-zones-widget h4 { font-weight: 600; margin: 0 0 8px 0; }
-  #top-zones-list { margin: 0; padding-left: 20px; }
-  #top-zones-list li { margin-bottom: 6px; color: #bb1111; font-weight: 600; }
-  #top-zones-list li a { text-decoration: none; color: #bb1111; cursor: pointer; }
-  #top-zones-list li a:hover { text-decoration: underline; }
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Light/Dark base tokens */
+:root {
+  --bg-color: rgba(255, 255, 255, 0.85);
+  --text-color: #222;
+  --shadow-color: rgba(0, 0, 0, 0.12);
+  --header-bg: rgba(255,255,255,0.67);
+  --header-text: #222;
+}
+
+#weather-widget.hidden {
+  display: none;
+}
 
 
-  .map-layer-button {
-    font-size: 24px; /* increase emoji size */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-  }
+body.dark-mode {
+  --bg-color: rgba(30, 30, 30, 0.85);
+  --text-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.7);
+  --header-bg: rgba(10, 10, 10, 0.8);
+  --header-text: #ddd;
+  background-color: #111;
+  color: var(--text-color);
+}
 
-  .emoji-icon {
-    font-size: 25px;
-    line-height: 25px;
-    text-align: center;
-  }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: var(--header-bg);
+  color: var(--header-text);
+  box-shadow: 0 2px 10px var(--shadow-color);
+  backdrop-filter: blur(8px);
+  position: relative;
+  z-index: 1000;
+}
+
+#logo { height: 48px; width: auto; margin-right: 16px; }
+
+.project-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #222;
+  letter-spacing: 0.02em;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  flex-grow: 1;
+}
+
+#schools-hospitals-toggle {
+  width: 70px; /* wider to fit both emojis */
+  height: 36px;
+  font-size: 20px;
+  line-height: 36px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease-in-out;
+}
 
 
-  .map-layer-button {
-    font-size: 20px;
-    width: 50px;
-    height: 36px;
-    line-height: 36px;
-    text-align: center;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .map-layer-button.active, 
-  .map-layer-button:hover {
-    background-color: #f0f0f0;
-  }
-  
+body.dark-mode .project-name { color: #fff; }
+
+#nasa-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--header-text);
+}
+
+#nasa-logo { height: 32px; width: auto; }
+
+/* Dark mode toggle: circular */
+#dark-mode-toggle {
+  background: var(--bg-color);
+  border: none;
+  color: var(--text-color);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px var(--shadow-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-left: 16px;
+}
+
+#dark-mode-toggle:hover { filter: brightness(0.95); }
+
+/* Map fills space below header */
+#map {
+  width: 100%;
+  height: calc(100vh - 70px);
+  position: relative;
+  z-index: 0;
+}
+
+/* Widgets stack */
+#widets, #widgets { /* typo guard */
+  position: absolute;
+  top: 70px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 1100;
+  max-width: 280px;
+  padding-bottom: 20px;
+}
+
+.widget {
+  background: var(--bg-color);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px var(--shadow-color);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-color);
+  user-select: none;
+  position: relative;
+  margin-bottom: 0;
+  top : 50px;
+}
+
+.widget-hide-btn {
+  background: none;
+  border: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #444;
+  padding: 2px 6px;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.widget-hide-btn:hover { color: #000; background: rgba(0, 0, 0, 0.06); }
+
+.widget.hidden { display: none; }
+
+#hidden-widgets {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  height: 48px; /* fixed height for icons row */
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  z-index: 1101;
+  pointer-events: auto;
+}
+
+.hidden-widget-icon {
+  background: var(--bg-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 12px var(--shadow-color);
+  user-select: none;
+  font-size: 20px;
+  position: relative;
+  top: 0 !important;  /* Remove absolute positioning */
+  right: 0 !important;
+  transition: transform 0.3s ease;
+}
+
+
+/* Slider widget layout */
+#aqi-slider-widget { flex-direction: column; padding: 8px 14px; width: 100%; gap: 8px; cursor: pointer; }
+
+#aqi-slider {
+  width: 100%;
+  appearance: none;
+  height: 12px;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    #00e400 0%,
+    #00e400 10%,
+    #ffff00 10%,
+    #ffff00 30%,
+    #ff7e00 30%,
+    #ff7e00 50%,
+    #ff0000 50%,
+    #ff0000 70%,
+    #99004c 70%,
+    #99004c 90%,
+    #7e0023 90%,
+    #7e0023 100%
+  );
+  outline: none; border: none; cursor: pointer;
+}
+
+#aqi-slider::-webkit-slider-thumb {
+  appearance: none; width: 22px; height: 22px; border-radius: 50%;
+  background: #222; cursor: pointer; border: 2px solid white; margin-top: -5px;
+  transition: background-color 0.2s ease;
+}
+#aqi-slider::-webkit-slider-thumb:hover { background: #555; }
+
+/* Map Layer Toggle button (no nested buttons) */
+#layer-toggle-button {
+  background: var(--bg-color);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  color: #444;
+  box-shadow: 0 1px 8px var(--shadow-color);
+  border-radius: 14px;
+  transition: color 0.2s ease, filter 0.2s ease;
+}
+#layer-toggle-button:hover { color: #000; filter: brightness(0.98); }
+
+.icon { width: 24px; height: 24px; stroke-width: 2; stroke: currentColor; fill: none; }
+
+/* AQI Legend */
+#aqi-legend-widget { flex-direction: column; width: 100%; font-size: 13px; position: relative; }
+#legend-toggle { background: none; border: none; color: #444; font-size: 20px; cursor: pointer; margin-bottom: 6px; align-self: flex-start; padding: 0; }
+#legend-content { background: var(--bg-color); border-radius: 12px; box-shadow: 0 1px 8px var(--shadow-color); padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+.color-block { width: 18px; height: 14px; display: inline-block; border-radius: 4px; margin-right: 8px; vertical-align: middle; }
+
+/* Top 3 Zones */
+#top-zones-widget { flex-direction: column; max-height: 180px; overflow-y: auto; width: 100%; font-size: 14px; position: relative; }
+#top-zones-widget h4 { font-weight: 600; margin: 0 0 8px 0; }
+#top-zones-list { margin: 0; padding-left: 20px; }
+#top-zones-list li { margin-bottom: 6px; color: #bb1111; font-weight: 600; }
+#top-zones-list li a { text-decoration: none; color: #bb1111; cursor: pointer; }
+#top-zones-list li a:hover { text-decoration: underline; }
+
+
+.map-layer-button {
+  font-size: 24px; /* increase emoji size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.forecast-widget {
+  position: fixed;
+  left: 0;
+  top: 70px; /* below header or adjust as needed */
+  width: 120px;
+  background: var(--bg-color);
+  border-right: 1px solid #ccc;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  padding: 10px;
+  font-size: 14px;
+  z-index: 1100;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.forecast-widget h3 {
+  margin: 0 0 10px 0;
+  font-weight: bold;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.forecast-days {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-color);
+}
+
+.forecast-emoji {
+  font-size: 24px;
+  margin-top: 5px;
+}
+
+
+.emoji-icon {
+  font-size: 25px;
+  line-height: 25px;
+  text-align: center;
+}
+
+
+
+
+.map-layer-button {
+  font-size: 20px;
+  width: 50px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.map-layer-button.active, 
+.map-layer-button:hover {
+  background-color: #f0f0f0;
+}

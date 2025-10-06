@@ -213,6 +213,8 @@ function renderWeatherForecast(periods, aqiList) {
       `;
       weatherForecastWeek.appendChild(div);
 
+      const isDarkMode = document.body.classList.contains('dark-mode');
+
       // AQI color dot column
       const dotAqi = document.createElement('div');
       const aqiVal = Array.isArray(aqiList) ? aqiList[shown] : null;
@@ -231,7 +233,6 @@ function renderWeatherForecast(periods, aqiList) {
       // Put aqi number just below the dot
       const belowNum = document.createElement('div');
       belowNum.style.fontSize = '0.91em';
-      belowNum.style.color = getAQIColor(aqiVal);
       belowNum.style.marginTop = '1px';
       belowNum.style.textAlign = 'center';
       belowNum.textContent = aqiVal;
@@ -255,11 +256,6 @@ selectWeatherCity({
   display_name: "New York, NY, USA"
 });
 
-selectWeatherCity({
-  lat: 40.7128,
-  lon: -74.0060,
-  display_name: "New York, NY, USA"
-});
 
 
   const streetsButton = document.getElementById('streets-button');
@@ -577,6 +573,12 @@ selectWeatherCity({
     renderAmenitiesNearZones(uniqueZones);
   }
 
+  function updateBelowNumColor(belowNum) {
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    belowNum.style.color = isDarkMode ? 'white' : 'black';
+  }
+  
+
   function renderAmenitiesNearZones(zones) {
     schoolsHospitalsLayer.clearLayers();
     if (!schoolsData || !hospitalsData) return;
@@ -615,6 +617,8 @@ selectWeatherCity({
     nasaLogo.src = document.body.classList.contains('dark-mode') ? "static/nasa_logo_dark.png" : "static/nasa_logo.png";
   }
   updateNasaLogo();
+
+
 
   
   safeAddListener(darkModeToggle, 'click', () => {
