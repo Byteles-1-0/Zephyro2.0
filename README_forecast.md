@@ -1,13 +1,13 @@
 # AQI Forecasting Module
 
-Questo modulo aggiunge alla codebase la capacità di scaricare, preprocessare, addestrare e servire previsioni AQI giornaliere per 7 giorni.
+This module adds to the codebase the ability to download, preprocess, train, and serve 7-day daily AQI forecasts.
 
 ## Requisiti
 
 * Python 3.10+
-* Dipendenze principali: `torch`, `numpy`, `pandas`, `scikit-learn`, `requests`, `Flask`, `python-dotenv`, `Flask-Compress`.
+* Main dependencies: torch, numpy, pandas, scikit-learn, requests, Flask, python-dotenv, Flask-Compress.
 
-Installa le dipendenze aggiuntive (separatamente dal progetto principale):
+Install the additional dependencies (separately from the main project):
 
 ```bash
 pip install -r Zephyro/requirements.txt
@@ -15,19 +15,19 @@ pip install -r Zephyro/requirements.txt
 
 ## Training
 
-1. Esporta la chiave AirNow:
+1. Export your AirNow key:
 
 ```bash
-export AIRNOW_API_KEY=la_tua_chiave
+export AIRNOW_API_KEY=your_key
 ```
 
-2. Avvia il training (esempio su US continental):
+2. Start training (example on continental US):
 
 ```bash
 python -m aqi.train --bbox "-125,24,-66,49" --days_history 180 --parameters "PM25,O3" --out_dir artifacts/
 ```
 
-Alla fine otterrai:
+At the end you will get:
 
 ```
 artifacts/
@@ -37,29 +37,29 @@ artifacts/
   └── scalers.pkl
 ```
 
-Il campo `use_baseline` in `config.json` indica se la baseline (persistence/seasonal) ha battuto il Transformer sul validation set.
+The use_baseline field in config.json indicates whether the baseline (persistence/seasonal) outperformed the Transformer on the validation set.
 
-## Inferenza
+## Inference
 
-L'endpoint Flask è disponibile dopo aver avviato l'app.
+The Flask endpoint is available once the app is running:
 
 ```bash
 flask --app Zephyro.app run
 ```
 
-Richiedi un forecast settimanale:
+Request a weekly forecast:
 
 ```
 /predict/aqi_week.geojson?bbox=-74.3,40.5,-73.6,40.95&auto_step=1&target_cells=1200&min_aqi=51
 ```
 
-L'output è un GeoJSON `FeatureCollection` con proprietà `AQI_pred_day1` … `AQI_pred_day7`. Le celle con previsioni <= 50 vengono filtrate.
+The output is a GeoJSON FeatureCollection with properties AQI_pred_day1 … AQI_pred_day7.
+Cells with forecasts ≤ 50 are filtered out.
 
-Se i dati storici sono insufficienti per la cella, la risposta riporta `"model": "baseline"` nelle proprietà e `metadata.use_baseline` a `true`.
+If historical data are insufficient for a cell, the response will include "model": "baseline" in the properties and metadata.use_baseline set to true.
+## Quick Diagnostic Script
 
-## Script di diagnostica rapido
-
-Per tracciare le previsioni di una cella specifica:
+To plot the forecast for a specific cell:
 
 ```python
 import json
@@ -77,15 +77,15 @@ data = resp.json()
 feature = data["features"][0]
 values = [feature["properties"][f"AQI_pred_day{i}"] for i in range(1, 8)]
 plt.plot(range(1, 8), values, marker="o")
-plt.xlabel("Giorni nel futuro")
-plt.ylabel("AQI previsto")
-plt.title("AQI previsione 7 giorni")
+plt.xlabel("Days ahead")
+plt.ylabel("Predicted AQI")
+plt.title("7-Day AQI Forecast")
 plt.show()
 ```
 
 ## Testing
 
-Esegui i test unitari con:
+Run the unit tests with:
 
 ```bash
 pytest
